@@ -19,5 +19,7 @@ public class Test extends Actor
         move(2);
         /* Theo*/
         move(3);
+        /* George*/
+        move(4);
     }
 }
