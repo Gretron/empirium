@@ -1,9 +1,9 @@
 #Greenfoot project file
 class.Test.image=Gladiator-Sprite\ Sheet.png
-editor.fx.0.height=759
-editor.fx.0.width=824
-editor.fx.0.x=335
-editor.fx.0.y=108
+editor.fx.0.height=0
+editor.fx.0.width=0
+editor.fx.0.x=0
+editor.fx.0.y=0
 height=1056
 package.numDependencies=0
 package.numTargets=2
