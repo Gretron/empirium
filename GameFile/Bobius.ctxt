@@ -1,0 +1,16 @@
+#BlueJ class context
+comment0.target=Bobius
+comment0.text=\r\n\ Write\ a\ description\ of\ class\ Bobius\ here.\r\n\ \r\n\ @author\ (your\ name)\ \r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
+comment1.params=
+comment1.target=void\ act()
+comment1.text=\r\n\ Act\ -\ do\ whatever\ the\ Bobius\ wants\ to\ do.\ This\ method\ is\ called\ whenever\r\n\ the\ 'Act'\ or\ 'Run'\ button\ gets\ pressed\ in\ the\ environment.\r\n
+comment2.params=
+comment2.target=void\ checkKeyPressed()
+comment2.text=\r\n\ To\ check\ if\ a\ key\ is\ held\ down\ to\ move\ a\ character\ with\ extra\ animations\r\n
+comment3.params=
+comment3.target=void\ flipLeft()
+comment3.text=\r\n\ Flips\ the\ characters\ model\ to\ the\ left\r\n
+comment4.params=
+comment4.target=void\ flipRight()
+comment4.text=\r\n\ Flips\ the\ characters\ model\ to\ the\ right\r\n
+numComments=5
