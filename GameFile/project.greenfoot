@@ -1,11 +1,11 @@
 #Greenfoot project file
 class.Bobius.image=Test\ Asset.png
-class.MyWorld.image=sand.jpg
+class.MyWorld.image=Test\ Background.png
 editor.fx.0.height=739
 editor.fx.0.width=816
 editor.fx.0.x=552
 editor.fx.0.y=100
-height=1056
+height=1048
 package.numDependencies=0
 package.numTargets=2
 project.charset=windows-1252
@@ -37,7 +37,7 @@ target2.width=80
 target2.x=0
 target2.y=0
 version=3.0.0
-width=1936
+width=1938
 world.lastInstantiated=MyWorld
 xPosition=0
 yPosition=0
