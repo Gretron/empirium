@@ -8,28 +8,41 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
     */
     public class Bobius extends Actor
     {   
-        // Right Images
-        private GreenfootImage imageR1 = new GreenfootImage("WalkingAnimation1.png");
-        private GreenfootImage imageR2 = new GreenfootImage("WalkingAnimation2.png");
-        private GreenfootImage imageR3 = new GreenfootImage("WalkingAnimation3.png");
-        private GreenfootImage imageR4 = new GreenfootImage("WalkingAnimation4.png");
-        private GreenfootImage imageR5 = new GreenfootImage("WalkingAnimation5.png");
-        private GreenfootImage imageR6 = new GreenfootImage("WalkingAnimation6.png");
-        // Left images
-        private GreenfootImage imageL1 = new GreenfootImage("WalkingAnimationLeft1.png");
-        private GreenfootImage imageL2 = new GreenfootImage("WalkingAnimationLeft2.png");
-        private GreenfootImage imageL3 = new GreenfootImage("WalkingAnimationLeft3.png");
-        private GreenfootImage imageL4 = new GreenfootImage("WalkingAnimationLeft4.png");
-        private GreenfootImage imageL5 = new GreenfootImage("WalkingAnimationLeft5.png");
-        private GreenfootImage imageL6 = new GreenfootImage("WalkingAnimationLeft6.png");
-        // animating
-        private int frame = 5;
-        private int animationCount = 0;
+        private GreenfootImage stand1 = new GreenfootImage("Test Sprite Upscaled.png");
+        private GreenfootImage stand2 = new GreenfootImage("Test Sprite UpscaledLeft.png");
+        
+        private GreenfootImage walk1 = new GreenfootImage("WalkingAnimation1.png");
+        private GreenfootImage walk2 = new GreenfootImage("WalkingAnimation2.png");
+        private GreenfootImage walk3 = new GreenfootImage("WalkingAnimation3.png");
+        private GreenfootImage walk4 = new GreenfootImage("WalkingAnimation4.png");
+        private GreenfootImage walk5 = new GreenfootImage("WalkingAnimation5.png");
+        private GreenfootImage walk6 = new GreenfootImage("WalkingAnimation6.png");
+        
+        private GreenfootImage walk1L = new GreenfootImage("WalkingAnimationLeft1.png");
+        private GreenfootImage walk2L = new GreenfootImage("WalkingAnimationLeft2.png");
+        private GreenfootImage walk3L = new GreenfootImage("WalkingAnimationLeft3.png");
+        private GreenfootImage walk4L = new GreenfootImage("WalkingAnimationLeft4.png");
+        private GreenfootImage walk5L = new GreenfootImage("WalkingAnimationLeft5.png");
+        private GreenfootImage walk6L = new GreenfootImage("WalkingAnimationLeft6.png");
+        
+        private int counter;
+        
+        private boolean isStanding;
+        private boolean walkedRight;
+        private boolean walkedLeft;
         // Gravity
         private static final int GRAVITY = 4;
         private int vSpeed;
    
-        
+            /**
+         * 
+         */
+        public Bobius(){
+            setImage(stand1);
+            isStanding = true;
+            walkedRight = false;
+            counter = 0;
+        }
         
         /**
         * Act - do whatever the Bobius wants to do. This method is called whenever
@@ -37,118 +50,122 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
         */
         public void act() 
        {
-           checkKeyPressed();
            checkGround();
            gravity();
-           animationCount++;
+           counter();
+           state();
        }
-       /**
-        * To check if a key is held down to move a character with extra animations
-        */
-       private void checkKeyPressed() {
-           int speed = 0;
-           
-           if (Greenfoot.isKeyDown("d") && Greenfoot.isKeyDown("a")) {
-                   move(speed);
-           }
-           if (Greenfoot.isKeyDown("w")) {
-               
-           }
-           if (Greenfoot.isKeyDown("d")) {
-               move(speed + 3);
-              walkingR();
-               counter();
-           }
-           if (Greenfoot.isKeyDown("a")) {
-               move(speed - 3);
-               walkingL();
-               counter();
-           }
-           if (Greenfoot.isKeyDown("shift") && Greenfoot.isKeyDown("d")) {
-                move(speed + 6);
-                
-           }
-           if (Greenfoot.isKeyDown("shift") && Greenfoot.isKeyDown("a")) {
-               move(speed - 6);
-               
-           }
-       }
-       /**
-       * 
-       */
-       private void walkingR() {
-           if (frame == 5) {
-               setImage(imageR1);
+       public void walkAnimationRight(){
+            if (getImage() == walk6){
+                setImage(walk1);
             }
-            else if (frame == 10) {
-                setImage(imageR2);
+            else if (getImage() == walk1){
+                setImage(walk2);
             }
-             else if (frame == 15) {
-                setImage(imageR3);
+            else if (getImage() == walk2){
+                setImage(walk3);
             }
-             else if (frame == 20) {
-                setImage(imageR4);
+            else if (getImage() == walk3){
+                setImage(walk4);
             }
-             else if (frame == 25) {
-                setImage(imageR5);
+            else if (getImage() == walk4){
+                setImage(walk5);
             }
-             else if (frame == 30) {
-                setImage(imageR6);
-                frame = 5;
-                return;
+            else {
+                setImage(walk6);
             }
-            frame++;
-       }
-       private void walkingL() {
-           if (frame == 5) {
-                    setImage(imageL1);
-
+        }
+        public void walkAnimationLeft(){
+            if (getImage() == walk6L){
+                setImage(walk1L);
             }
-            else if (frame == 10) {
-                    setImage(imageL2);
-
+            else if (getImage() == walk1L){
+                setImage(walk2L);
             }
-             else if (frame == 15) {
-                    setImage(imageL3);
-
+            else if (getImage() == walk2L){
+                setImage(walk3L);
             }
-             else if (frame == 20) {
-                    setImage(imageL4);
-                   
+            else if (getImage() == walk3L){
+                setImage(walk4L);
             }
-            else if (frame == 25) {
-                    setImage(imageL5);
-
+            else if (getImage() == walk4L){
+                setImage(walk5L);
             }
-            else if (frame == 30) {
-                setImage(imageL6);
-                frame = 5;
-                return;
-           }
-           frame++;
-            
-       }
-        /**
-         * A counter to help the animation be smoother
-         */
-       private void counter() {
-              if(animationCount % 4 == 0) {
+            else {
+                setImage(walk6L);
+            }
+        }
+    
+        public boolean isWalkingRight(){
+            if (Greenfoot.isKeyDown("d") && !Greenfoot.isKeyDown("shift")){
+                walkedRight = true;
+                walkedLeft = false;
+                return true;
+            }
+            return false;
+        }
+        
+        public boolean isWalkingLeft(){
+            if (Greenfoot.isKeyDown("a") && !Greenfoot.isKeyDown("shift")){
+                walkedLeft = true;
+                walkedRight = false;
+                return true;
+            }
+            return false;
+        }
+        
+        public void isStandingRight(){
+            setImage(stand1);
+        }
+        
+        public void isStandingLeft(){
+            setImage(stand2);
+        }
+        
+        public void state(){
+            if (isWalkingRight()){
+                if (counter % 5 == 0){
+                    setLocation(getX() + 10,getY());
+                    walkAnimationRight();
                 }
+            }
+            
+            else if (isWalkingLeft()){
+                if (counter % 5 == 0){
+                    setLocation(getX() - 10,getY());
+                    walkAnimationLeft();
+                }
+            }
+            else if(!isWalkingRight() && walkedRight) {
+                isStandingRight();
+            }
+            else if(!isWalkingLeft() && walkedLeft) {
+                isStandingLeft();
+            }
+        }
+        
+        public void counter(){
+            if (counter < 25){
+                counter++;
+            }
+            else {
+                counter = 0;
+            }
         }
            /**
             * to set  up gravity so the player falls on the ground and stays there
             */
        private void gravity() {
-              setLocation(getX(), getY() + vSpeed);
-               
+       setLocation(getX(), getY() + vSpeed);
+           
        }
        private void checkGround() {
-               if (!isTouching(Ground.class)) {
-                   vSpeed += GRAVITY;
-               }
-               else {
-                   vSpeed = 0;
-               }
-       }
-       
- }
+           if (!isTouching(Ground.class)) {
+               vSpeed += GRAVITY;
+           }
+           else {
+               vSpeed = 0;
+           }
+        }
+   
+}
