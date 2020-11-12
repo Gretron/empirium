@@ -131,14 +131,14 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
         public void state(){
             if (isWalkingRight()){
                 if (counter % 4 == 0){
-                    setLocation(getX() + 11,getY());
+                    setLocation(getX() + 13,getY());
                     walkAnimationRight();
                 }
             }
             
             else if (isWalkingLeft()){
                 if (counter % 4 == 0){
-                    setLocation(getX() - 11,getY());
+                    setLocation(getX() - 13,getY());
                     walkAnimationLeft();
                 }
             }
