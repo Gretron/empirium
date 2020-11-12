@@ -33,6 +33,10 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
         // Gravity
         private static final int GRAVITY = 4;
         private int vSpeed;
+        // jump
+        private int jumpSpeed = 0; //vertical jump speed
+        private int acceleration = 1; //gravity effect while falling  
+        private int jumpStrength = -40; 
    
             /**
          * 
@@ -50,6 +54,8 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
         */
         public void act() 
        {
+           checkFall();
+           isJumping();
            checkGround();
            gravity();
            counter();
@@ -124,15 +130,15 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
         
         public void state(){
             if (isWalkingRight()){
-                if (counter % 5 == 0){
-                    setLocation(getX() + 10,getY());
+                if (counter % 4 == 0){
+                    setLocation(getX() + 11,getY());
                     walkAnimationRight();
                 }
             }
             
             else if (isWalkingLeft()){
-                if (counter % 5 == 0){
-                    setLocation(getX() - 10,getY());
+                if (counter % 4 == 0){
+                    setLocation(getX() - 11,getY());
                     walkAnimationLeft();
                 }
             }
@@ -144,7 +150,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
             }
         }
         
-        public void counter(){
+       public void counter(){
             if (counter < 25){
                 counter++;
             }
@@ -156,9 +162,9 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
             * to set  up gravity so the player falls on the ground and stays there
             */
        private void gravity() {
-       setLocation(getX(), getY() + vSpeed);
+           setLocation(getX(), getY() + vSpeed);
            
-       }
+        }
        private void checkGround() {
            if (!isTouching(Ground.class)) {
                vSpeed += GRAVITY;
@@ -167,5 +173,38 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
                vSpeed = 0;
            }
         }
-   
+        /**
+        * To make a player jump using isKeyDown("w")
+        */
+       private void isJumping() {
+           if(Greenfoot.isKeyDown("w") && onGround()) {
+               jumpSpeed = jumpStrength;
+               fall();
+        }
+        }
+       /** 
+        * to call when the player jumps and starts falling
+        */
+       private void fall() {
+           setLocation(getX(), getY() + jumpSpeed);
+           jumpSpeed = jumpSpeed + acceleration; 
+       }
+       /**
+        * To see if is onGround when you fall
+        */
+       private boolean onGround() {
+           Actor under = getOneObjectAtOffset(0, getImage().getHeight()/2, Ground.class);
+           return under != null;
+        }
+        /**
+         * To check if the actor is falling
+         */
+       private void checkFall() {
+           if (onGround()) {
+               jumpSpeed = 0;
+            }
+            else {
+                fall();
+            }
+        }
 }
