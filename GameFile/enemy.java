@@ -8,8 +8,8 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class enemy extends Actor
 {
-    private GreenfootImage stand1 = new GreenfootImage("Test Sprite Upscaled.png");
-    private GreenfootImage stand2 = new GreenfootImage("Test Sprite UpscaledLeft.png");
+    private GreenfootImage stand2 = new GreenfootImage("Test Sprite Upscaled.png");
+    private GreenfootImage stand1 = new GreenfootImage("Test Sprite UpscaledLeft.png");
     
     private GreenfootImage walk1 = new GreenfootImage("WalkingAnimation1.png");
     private GreenfootImage walk2 = new GreenfootImage("WalkingAnimation2.png");
@@ -34,6 +34,8 @@ public class enemy extends Actor
     // Gravity
     private static final int GRAVITY = 4;
     private int vSpeed;
+    
+    private final int distance = 150;
     
     public enemy() {
         setImage(stand1);
@@ -66,11 +68,22 @@ public class enemy extends Actor
         setLocation(getX(), getY() + vSpeed);
            
     }
-    public boolean isMoving() {
+    public boolean direction() {
         int enemyX = getX();
         Actor bobius = (Actor)getWorld().getObjects(Bobius.class).get(0);
         int bobiusX = bobius.getX();
         if (enemyX - bobiusX < 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    public boolean closeProximity() {
+        int enemyX = getX();
+        Actor bobius = (Actor)getWorld().getObjects(Bobius.class).get(0);
+        int bobiusX = bobius.getX();
+        if (enemyX > bobiusX - distance && enemyX < bobiusX + distance) {
             return true;
         }
         else {
@@ -88,18 +101,17 @@ public class enemy extends Actor
             counter = 0;
         }
     }
-
+    
     public boolean isWalkingLeft(){
-
-         if (!isMoving()){
-            walkedLeft = true;
-            walkedRight = false;
-            return true;
-            }
+        if(!direction()){
+          walkedLeft = true;
+          walkedRight = false;
+          return true;
+        }
         return false;
     }
     public boolean isWalkingRight(){
-        if (isMoving()){
+        if (direction()){
             walkedRight = true;
             walkedLeft = false;
             return true;
@@ -107,25 +119,25 @@ public class enemy extends Actor
         return false;
     }
     public void state(){
-            if (isWalkingRight()){
-                if (counter % 5 == 0){
-                    setLocation(getX() + 13,getY());
-                    enemyWalkAnimationR();
-                }
+        if (isWalkingRight() && !closeProximity()){
+            if (counter % 5 == 0){
+                setLocation(getX() + 13,getY());
+                enemyWalkAnimationR();
             }
-            
-            else if (isWalkingLeft()){
-                if (counter % 5 == 0){
-                    setLocation(getX() - 13,getY());
-                    enemyWalkAnimationL();
-                }
+        }
+        
+        else if (isWalkingLeft() && !closeProximity()){
+            if (counter % 5 == 0){
+                setLocation(getX() - 13,getY());
+                enemyWalkAnimationL();
             }
-            else if(!isWalkingRight() && walkedRight) {
-                isStandingRight();
-            }
-            else if(!isWalkingLeft() && walkedLeft) {
-                isStandingLeft();
-            }
+        }
+        else if(!direction()) {
+            isStandingRight();
+        }
+        else if(direction()) {
+            isStandingLeft();
+        }
     }
     public void isStandingRight(){
          setImage(stand1);
@@ -133,6 +145,7 @@ public class enemy extends Actor
         
     public void isStandingLeft(){
         setImage(stand2);
+        
     }
     
     public void enemyWalkAnimationR(){
