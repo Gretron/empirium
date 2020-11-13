@@ -34,8 +34,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
         private static final int GRAVITY = 4;
         private int vSpeed;
         // jump
-        private int jumpSpeed = 0; //vertical jump speed
-        private int acceleration = 1; //gravity effect while falling  
+        private int jumpSpeed = 0; //vertical jump speed 
         private int jumpStrength = -40; 
    
             /**
@@ -46,7 +45,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
             isStanding = true;
             walkedRight = false;
             counter = 0;
-        }
+       }
         
         /**
         * Act - do whatever the Bobius wants to do. This method is called whenever
@@ -122,23 +121,23 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
         
         public void isStandingRight(){
             setImage(stand1);
-        }
+       }
         
         public void isStandingLeft(){
             setImage(stand2);
-        }
+       }
         
         public void state(){
             if (isWalkingRight()){
                 if (counter % 4 == 0){
-                    setLocation(getX() + 13,getY());
+                    setLocation(getX() + 20,getY());
                     walkAnimationRight();
                 }
             }
             
             else if (isWalkingLeft()){
                 if (counter % 4 == 0){
-                    setLocation(getX() - 13,getY());
+                    setLocation(getX() - 20,getY());
                     walkAnimationLeft();
                 }
             }
@@ -148,7 +147,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
             else if(!isWalkingLeft() && walkedLeft) {
                 isStandingLeft();
             }
-        }
+       }
         
        public void counter(){
             if (counter < 25){
@@ -164,7 +163,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
        private void gravity() {
            setLocation(getX(), getY() + vSpeed);
            
-        }
+       }
        private void checkGround() {
            if (!isTouching(Ground.class)) {
                vSpeed += GRAVITY;
@@ -187,7 +186,6 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
         */
        private void fall() {
            setLocation(getX(), getY() + jumpSpeed);
-           jumpSpeed = jumpSpeed + acceleration; 
        }
        /**
         * To see if is onGround when you fall

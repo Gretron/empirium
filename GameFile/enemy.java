@@ -8,46 +8,176 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class enemy extends Actor
 {
-    int timer = 20;
-    int speed = 1;
-    public void act () {
-        move();
+    private GreenfootImage stand1 = new GreenfootImage("Test Sprite Upscaled.png");
+    private GreenfootImage stand2 = new GreenfootImage("Test Sprite UpscaledLeft.png");
+    
+    private GreenfootImage walk1 = new GreenfootImage("WalkingAnimation1.png");
+    private GreenfootImage walk2 = new GreenfootImage("WalkingAnimation2.png");
+    private GreenfootImage walk3 = new GreenfootImage("WalkingAnimation3.png");
+    private GreenfootImage walk4 = new GreenfootImage("WalkingAnimation4.png");
+    private GreenfootImage walk5 = new GreenfootImage("WalkingAnimation5.png");
+    private GreenfootImage walk6 = new GreenfootImage("WalkingAnimation6.png");
+    
+    private GreenfootImage walk1L = new GreenfootImage("WalkingAnimationLeft1.png");
+    private GreenfootImage walk2L = new GreenfootImage("WalkingAnimationLeft2.png");
+    private GreenfootImage walk3L = new GreenfootImage("WalkingAnimationLeft3.png");
+    private GreenfootImage walk4L = new GreenfootImage("WalkingAnimationLeft4.png");
+    private GreenfootImage walk5L = new GreenfootImage("WalkingAnimationLeft5.png");
+    private GreenfootImage walk6L = new GreenfootImage("WalkingAnimationLeft6.png");
+    
+    private int counter;    
+        
+    private boolean isStanding;
+    private boolean walkedRight;
+    private boolean walkedLeft;
+    
+    // Gravity
+    private static final int GRAVITY = 4;
+    private int vSpeed;
+    
+    public enemy() {
+        setImage(stand1);
+        isStanding = true;
+        walkedRight = false;
+        counter = 0;
     }
-    public void move()
-       {
-       timer--;
-       if (timer > 0) move(speed);
-       speed = 3 ;
-       {
-            timer = 2+Greenfoot.getRandomNumber(30); 
+    
+    public void act () {
+        gravity();
+        counter();
+        state();
+        checkGround();
+    }
+    /**
+    * To check if there is collision with the ground (this is the collision factor with the ground)
+    */
+    public void checkGround() {
+        if (!isTouching(Ground.class)) {
+               vSpeed += GRAVITY;
+           }
+           else {
+               vSpeed = 0;
+        }
+    }
+    /**
+    * to set  up gravity so the player falls on the ground and stays there
+    */
+    public void gravity() {
+        setLocation(getX(), getY() + vSpeed);
+           
+    }
+    public boolean isMoving() {
+        int enemyX = getX();
+        Actor bobius = (Actor)getWorld().getObjects(Bobius.class).get(0);
+        int bobiusX = bobius.getX();
+        if (enemyX - bobiusX < 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    /**
+     * 
+     */
+    public void counter(){
+        if (counter < 25){
+            counter++;
+        }
+        else {
+            counter = 0;
         }
     }
 
-    private int setRandomNumber(){
-         int num = Greenfoot.getRandomNumber(2);
-         int initNum=0;
-         if(num==1){
-              num=1;
-           }
-         if(num==2){
-              initNum=-1;
-           }
-           return initNum;
+    public boolean isWalkingLeft(){
+
+         if (!isMoving()){
+            walkedLeft = true;
+            walkedRight = false;
+            return true;
+            }
+        return false;
     }
-    public void flipLeft() {
-         if (getRotation() == 0){
-                turn(180);
-                getImage().mirrorVertically();
-         }
+    public boolean isWalkingRight(){
+        if (isMoving()){
+            walkedRight = true;
+            walkedLeft = false;
+            return true;
+        }
+        return false;
+    }
+    public void state(){
+            if (isWalkingRight()){
+                if (counter % 5 == 0){
+                    setLocation(getX() + 13,getY());
+                    enemyWalkAnimationR();
+                }
+            }
+            
+            else if (isWalkingLeft()){
+                if (counter % 5 == 0){
+                    setLocation(getX() - 13,getY());
+                    enemyWalkAnimationL();
+                }
+            }
+            else if(!isWalkingRight() && walkedRight) {
+                isStandingRight();
+            }
+            else if(!isWalkingLeft() && walkedLeft) {
+                isStandingLeft();
+            }
+    }
+    public void isStandingRight(){
+         setImage(stand1);
+    }
+        
+    public void isStandingLeft(){
+        setImage(stand2);
     }
     
-    public void flipRight() {
-         if (getRotation() == 180) {
-                turn(180);
-                getImage().mirrorVertically();
-         }
-     }
+    public void enemyWalkAnimationR(){
+        if (getImage() == walk6){
+            setImage(walk1);
+        }
+        else if (getImage() == walk1){
+            setImage(walk2);
+        }
+        else if (getImage() == walk2){
+            setImage(walk3);
+        }
+        else if (getImage() == walk3){
+            setImage(walk4);
+        }
+        else if (getImage() == walk4){
+            setImage(walk5);
+        }
+        else {
+            setImage(walk6);
+        }
+    }
+    public void enemyWalkAnimationL(){
+       if (getImage() == walk6L){
+            setImage(walk1L);
+        }
+        else if (getImage() == walk1L){
+            setImage(walk2L);
+        }
+        else if (getImage() == walk2L){
+            setImage(walk3L);
+        }
+        else if (getImage() == walk3L){
+            setImage(walk4L);
+        }
+        else if (getImage() == walk4L){
+            setImage(walk5L);
+        }
+        else {
+            setImage(walk6L);
+        }
+    }
+    
 }
+
     
 
 
