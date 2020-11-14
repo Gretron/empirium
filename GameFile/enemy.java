@@ -149,7 +149,7 @@ public class enemy extends Actor
     }
     
     public void enemyWalkAnimationR(){
-        if (getImage() == walk6){
+        if (getImage() == stand1 || getImage() == stand2){
             setImage(walk1);
         }
         else if (getImage() == walk1){
@@ -164,12 +164,15 @@ public class enemy extends Actor
         else if (getImage() == walk4){
             setImage(walk5);
         }
-        else {
+        else if (getImage() == walk5) {
             setImage(walk6);
+        }
+        else {
+            setImage(walk1);
         }
     }
     public void enemyWalkAnimationL(){
-       if (getImage() == walk6L){
+       if (getImage() == stand1 || getImage() == stand2){
             setImage(walk1L);
         }
         else if (getImage() == walk1L){
@@ -184,8 +187,11 @@ public class enemy extends Actor
         else if (getImage() == walk4L){
             setImage(walk5L);
         }
-        else {
+        else if (getImage() == walk5L) {
             setImage(walk6L);
+        }
+        else {
+            setImage(walk1L);
         }
     }
     
