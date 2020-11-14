@@ -32,6 +32,8 @@ public class Bobius extends Actor {
    // Rolling Right Frames
    private GreenfootImage[] rollingR = new GreenfootImage[9];
    private int rollingImgs;
+   
+   private int rollDelay = 0;
 
    // Rolling Left Frames
    private GreenfootImage[] rollingL = new GreenfootImage[9];
@@ -51,7 +53,8 @@ public class Bobius extends Actor {
 
    // Jump
    private int jumpSpeed = 0; // Vertical Jump Speed 
-   private int jumpStrength = -40; 
+   private int jumpStrength = -40;
+   private int jumpDelay = 0;
     
    // CONSTRUCTOR
 
@@ -105,11 +108,13 @@ public class Bobius extends Actor {
        }
        else if(isRollingR()){
            if (counter % 4 == 0){
+               setLocation(getX() + 60,getY());
                rollingAnimationR();
            }
        }
        else if(isRollingL()){
            if (counter % 4 == 0){
+               setLocation(getX() - 60,getY());
                rollingAnimationL();
            }
        }
@@ -202,6 +207,7 @@ public class Bobius extends Actor {
    }
     
    public boolean isRollingR(){
+       rollDelay++;
        if (Greenfoot.isKeyDown("d") && Greenfoot.isKeyDown("shift")){
            return true;
        }
@@ -219,16 +225,25 @@ public class Bobius extends Actor {
    * To make a player jump using isKeyDown("w")
    */
    private void isJumping() {
-       if(Greenfoot.isKeyDown("w") && onGround()) {
+       jumpDelay++;
+       if(Greenfoot.isKeyDown("w") && onGround() && jumpDelay == 2) {
            jumpSpeed = jumpStrength;
            Greenfoot.playSound("jump.wav");
            fall();
        }
+       if (jumpDelay == 3) {
+           jumpDelay = 0;
+       }
+       
    }
    
-   public void isStandingR(){setImage(stand1);}
+   public void isStandingR(){
+       setImage(stand1);
+   }
     
-   public void isStandingL(){setImage(stand2);}
+   public void isStandingL() {
+       setImage(stand2);
+   }
 
    // COUNTER INCREMENT METHODS
     
