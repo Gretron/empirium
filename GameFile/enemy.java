@@ -8,8 +8,8 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class enemy extends Actor
 {
-    private GreenfootImage stand2 = new GreenfootImage("Test Sprite Upscaled.png");
-    private GreenfootImage stand1 = new GreenfootImage("Test Sprite UpscaledLeft.png");
+    private GreenfootImage stand2 = new GreenfootImage("Stand.png");
+    private GreenfootImage stand1 = new GreenfootImage("StandL.png");
     
     private GreenfootImage walk1 = new GreenfootImage("WalkingAnimation1.png");
     private GreenfootImage walk2 = new GreenfootImage("WalkingAnimation2.png");
@@ -18,12 +18,12 @@ public class enemy extends Actor
     private GreenfootImage walk5 = new GreenfootImage("WalkingAnimation5.png");
     private GreenfootImage walk6 = new GreenfootImage("WalkingAnimation6.png");
     
-    private GreenfootImage walk1L = new GreenfootImage("WalkingAnimationLeft1.png");
-    private GreenfootImage walk2L = new GreenfootImage("WalkingAnimationLeft2.png");
-    private GreenfootImage walk3L = new GreenfootImage("WalkingAnimationLeft3.png");
-    private GreenfootImage walk4L = new GreenfootImage("WalkingAnimationLeft4.png");
-    private GreenfootImage walk5L = new GreenfootImage("WalkingAnimationLeft5.png");
-    private GreenfootImage walk6L = new GreenfootImage("WalkingAnimationLeft6.png");
+    private GreenfootImage walk1L = new GreenfootImage("WalkingAnimationL1.png");
+    private GreenfootImage walk2L = new GreenfootImage("WalkingAnimationL2.png");
+    private GreenfootImage walk3L = new GreenfootImage("WalkingAnimationL3.png");
+    private GreenfootImage walk4L = new GreenfootImage("WalkingAnimationL4.png");
+    private GreenfootImage walk5L = new GreenfootImage("WalkingAnimationL5.png");
+    private GreenfootImage walk6L = new GreenfootImage("WalkingAnimationL6.png");
     
     private int counter;    
         
