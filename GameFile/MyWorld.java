@@ -18,5 +18,6 @@ public class MyWorld extends World
         addObject(new Ground(), 640, 650);
         addObject(new Prisoner(), 1100, 410);
         setPaintOrder(Bobius.class, Prisoner.class, World.class, Ground.class);
+        addObject(new RestartButton(), 1220, 55);
     }
 }
