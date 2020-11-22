@@ -88,6 +88,8 @@ public class Bobius extends Actor {
     private boolean isAttackingL;
     private boolean isAttackingR;
     private boolean attacked;
+
+    private boolean direction;
     
     // Gravity Variables
     private static final int GRAVITY = 4;
@@ -114,6 +116,7 @@ public class Bobius extends Actor {
         isAttackingL = false;
         isAttackingR = false;
         attacked = false;
+        direction = true;
         rollCounter = rollReload;
         counter = 0;
     }
@@ -126,6 +129,7 @@ public class Bobius extends Actor {
         // State
         state();
         attackCollision();
+        getDirection();
         // Animation Counter
         counter();
         
@@ -146,7 +150,7 @@ public class Bobius extends Actor {
         // Rolling Right State
         if(isRollingR() || isRollingR){
            if (rollCounter < rollDelay){
-               rollingAnimationR();
+               rollingAnimationR();           
            }
            else {
                rolled = false;
@@ -164,10 +168,10 @@ public class Bobius extends Actor {
                isRollingL = false;
            }
         }
-        if (isAttackingL() || isAttackingL) {
+        else if (isAttackingL() || isAttackingL) {
             attackAnimationL();
         }
-        if (isAttackingR() || isAttackingR) {
+        else if (isAttackingR() || isAttackingR) {
             attackAnimationR();
         }
         
@@ -193,6 +197,62 @@ public class Bobius extends Actor {
     }
     
     // ANIMATION METHODS
+    
+    private void attackAnimationR() {
+        if (counter % 2 == 0){
+            
+           if (getImage() == standR){
+               setImage(attack1R);
+           }
+           else if (getImage() == attack1R){
+               setImage(attack2R);
+           }
+           else if (getImage() == attack2R){
+               setImage(attack3R);
+           }
+           else if (getImage() == attack3R){
+               setImage(attack4R);
+           }
+           else if (getImage() == attack4R){
+               setImage(attack5R);
+           }
+           else if (getImage() == attack5R) {
+               setImage(attack6R);
+           }
+           else {
+               setImage(attack1R);
+               isAttackingR = false;
+           }
+        }   
+    }
+    
+    private void attackAnimationL() {
+        if (counter % 2 == 0){
+            
+           if (getImage() == standL){
+               setImage(attack1L);
+           }
+           else if (getImage() == attack1L){
+               setImage(attack2L);
+           }
+           else if (getImage() == attack2L){
+               setImage(attack3L);
+           }
+           else if (getImage() == attack3L){
+               setImage(attack4L);
+           }
+           else if (getImage() == attack4L){
+               setImage(attack5L);
+           }
+           else if (getImage() == attack5L) {
+               setImage(attack6L);
+           }
+           else {
+               setImage(attack1L);
+               isAttackingL = false;
+           }
+        }   
+    }
     
     public void rollingAnimationR(){
         if (counter % 4 == 0){
@@ -342,6 +402,7 @@ public class Bobius extends Actor {
     
     public boolean isRollingR(){
         if (Greenfoot.isKeyDown("d") && Greenfoot.isKeyDown("shift") && !isRollingL && canRoll() && !rolled){
+           //Greenfoot.playSound("EvadeRoll.wav");
            rolled = true;
            rollCounter = 0;
            isRollingR = true;
@@ -352,6 +413,7 @@ public class Bobius extends Actor {
     
     public boolean isRollingL(){
         if (Greenfoot.isKeyDown("a") && Greenfoot.isKeyDown("shift") && !isRollingR && canRoll() && !rolled){
+           //Greenfoot.playSound("EvadeRoll.wav");
            rolled = true; 
            rollCounter = 0;
            isRollingL = true;
@@ -389,81 +451,50 @@ public class Bobius extends Actor {
     public void isStandingL() {
         setImage(standL);
     }
-    private void attackAnimationL() {
-        if (counter % 4 == 0){
-            
-           if (getImage() == standL){
-               setImage(attack1L);
-           }
-           else if (getImage() == attack1L){
-               setImage(attack2L);
-           }
-           else if (getImage() == attack2L){
-               setImage(attack3L);
-           }
-           else if (getImage() == attack3L){
-               setImage(attack4L);
-           }
-           else if (getImage() == attack4L){
-               setImage(attack5L);
-           }
-           else if (getImage() == attack5L) {
-               setImage(attack6L);
-           }
-           else {
-               setImage(attack1L);
-               isAttackingL = false;
-           }
-        }   
-    }
-    private void attackAnimationR() {
-        if (counter % 4 == 0){
-            
-           if (getImage() == standR){
-               setImage(attack1R);
-           }
-           else if (getImage() == attack1R){
-               setImage(attack2R);
-           }
-           else if (getImage() == attack2R){
-               setImage(attack3R);
-           }
-           else if (getImage() == attack3R){
-               setImage(attack4R);
-           }
-           else if (getImage() == attack4R){
-               setImage(attack5R);
-           }
-           else if (getImage() == attack5R) {
-               setImage(attack6R);
-           }
-           else {
-               setImage(attack1R);
-               isAttackingR = false;
-           }
-        }   
-    }
+    
     public boolean isAttackingL() {
-        if (Greenfoot.isKeyDown("o") && !isRollingL() && !isRollingR()) {
+        if (Greenfoot.isKeyDown("o") && !isRollingL() && !isRollingR() && !direction) {
+           //Greenfoot.playSound("hit.wav");
            isAttackingL = true;
            attacked = true;
         }
         return false;
     }
     public boolean isAttackingR() {
-        if (Greenfoot.isKeyDown("o") && !isRollingL() && !isRollingR()) {
+        if (Greenfoot.isKeyDown("o") && !isRollingL() && !isRollingR() && direction) {
+            //Greenfoot.playSound("hit.wav");
             isAttackingR = true;
             attacked = true;
         }
         return false;
     }
     public boolean attackCollision() {
-        if (isAttackingR() || isAttackingR && isTouching(Hitbox.class) && getImage() == attack6R ) {
-            Greenfoot.stop();
+        Hitbox hitbox = (Hitbox) getOneIntersectingObject(Hitbox.class);
+        if (isAttackingR() || isAttackingR && hitbox != null && getImage() == attack6R) {
+            ((MyWorld)getWorld()).points += 1;
+            hitbox.healthValue -= 1;
+        }
+        if (isAttackingL() || isAttackingL && hitbox != null && getImage() == attack6L) {
+            ((MyWorld)getWorld()).points += 1;
+            hitbox.healthValue -= 1;
         }
         return false;
     }
 
+    public void getDirection(){
+        if(getImage() == walk1 || getImage() == walk2 || getImage() == walk3 || getImage() == walk4 ||
+                getImage() == walk5 || getImage() == walk6 || getImage() == standR || getImage() == roll1 ||
+                getImage() == roll2 || getImage() == roll3 || getImage() == roll4 || getImage() == roll5 ||
+                getImage() == roll6 || getImage() == roll7 || getImage() == roll8 || getImage() == roll9 ||
+                getImage() == attack1R || getImage() == attack2R || getImage() == attack3R || getImage() == attack4R ||
+                getImage() == attack5R || getImage() == attack6R) {
+            direction = true;
+        }
+        else {
+            direction = false;
+        }
+    }
+    
     // COUNTER INCREMENT METHODS
 
    public void counter(){
@@ -478,7 +509,7 @@ public class Bobius extends Actor {
    // GRAVITY METHODS
 
    /**
-   * to set  up gravity so the player falls on the ground and stays there
+   * to set  up gravity so the player falls on the Ground and stays there
    */
    private void gravity() {
        setLocation(getX(), getY() + vSpeed);

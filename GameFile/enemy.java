@@ -35,7 +35,7 @@ public class enemy extends Actor
     private static final int GRAVITY = 4;
     private int vSpeed;
     
-    private final int distance = 150;
+    private final int distance = 170;
     
     public enemy() {
         setImage(stand1);
@@ -51,7 +51,7 @@ public class enemy extends Actor
         checkGround();
     }
     /**
-    * To check if there is collision with the ground (this is the collision factor with the ground)
+    * To check if there is collision with the Ground (this is the collision factor with the Ground)
     */
     public void checkGround() {
         if (!isTouching(Ground.class)) {
@@ -62,7 +62,7 @@ public class enemy extends Actor
         }
     }
     /**
-    * to set  up gravity so the player falls on the ground and stays there
+    * to set  up gravity so the player falls on the Ground and stays there
     */
     public void gravity() {
         setLocation(getX(), getY() + vSpeed);
@@ -121,14 +121,14 @@ public class enemy extends Actor
     public void state(){
         if (isWalkingRight() && !closeProximity()){
             if (counter % 5 == 0){
-                setLocation(getX() + 13,getY());
+                setLocation(getX() + 10,getY());
                 enemyWalkAnimationR();
             }
         }
         
         else if (isWalkingLeft() && !closeProximity()){
             if (counter % 5 == 0){
-                setLocation(getX() - 13,getY());
+                setLocation(getX() - 10,getY());
                 enemyWalkAnimationL();
             }
         }
@@ -139,13 +139,14 @@ public class enemy extends Actor
             isStandingLeft();
         }
     }
-    public void isStandingRight(){
+    public boolean isStandingRight(){
          setImage(stand1);
+         return true;
     }
         
-    public void isStandingLeft(){
+    public boolean isStandingLeft(){
         setImage(stand2);
-        
+        return true;
     }
     
     public void enemyWalkAnimationR(){

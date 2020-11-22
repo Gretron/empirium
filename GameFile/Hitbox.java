@@ -10,22 +10,27 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class Hitbox extends Actor
 {
     GreenfootImage hitBox = new GreenfootImage("Hitbox rect.png");      
-    
+    public Prisoner prisoner;
+    public int healthValue = 30;
     public Hitbox() {
         hitBox.scale(hitBox.getWidth() - 200, hitBox.getHeight());
     }
-    /**
-     * Act - do whatever the Hitbox wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
-     */
+    
+    public Hitbox(Prisoner prisoner) {
+        this();
+        this.prisoner = prisoner;
+    }
+   
     public void act() 
     {  
          followBob();
          BoxOfHit();
     }    
     private void followBob() {
-        Actor prisoner = (Actor)getWorld().getObjects(Prisoner.class).get(0);
-        setLocation(prisoner.getX(), prisoner.getY());
+        if (!getWorld().getObjects(Prisoner.class).isEmpty()) {
+            Actor prisoner = (Actor)getWorld().getObjects(Prisoner.class).get(0);
+            setLocation(prisoner.getX(), prisoner.getY());
+        }
     }
     public void BoxOfHit() {
             setImage(hitBox);
