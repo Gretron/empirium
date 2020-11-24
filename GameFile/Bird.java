@@ -32,6 +32,7 @@ public class Bird extends Actor
     {
        removeAtEdge();
        movement();
+       twitchLOL();
     }   
      /**
      * bird animation
@@ -86,5 +87,14 @@ public class Bird extends Actor
         super.move(num);
         if (num < 0) animateBirdL();
         else animateBirdR();
+    }
+    
+    public void twitchLOL() {
+        if  (Greenfoot.mouseClicked(this)) {
+            String tonyTwitch = "https://www.twitch.tv/buhbah6";
+            String theoTwitch = "https://www.twitch.tv/sslur";
+            String georgeYT = "https://www.youtube.com/channel/UCvp8UGGAi_Up0r-4rhZTujg";
+            System.out.printf("%s\n%s\n%s\n", tonyTwitch, theoTwitch, georgeYT);
+        }   
     }
 }

@@ -37,13 +37,6 @@ public class enemy extends Actor
     
     private final int distance = 170;
     
-    public enemy() {
-        setImage(stand1);
-        isStanding = true;
-        walkedRight = false;
-        counter = 0;
-    }
-    
     public void act () {
         gravity();
         counter();
@@ -51,7 +44,7 @@ public class enemy extends Actor
         checkGround();
     }
     /**
-    * To check if there is collision with the Ground (this is the collision factor with the Ground)
+    * To check if there is collision with the ground (this is the collision factor with the ground)
     */
     public void checkGround() {
         if (!isTouching(Ground.class)) {
@@ -62,7 +55,7 @@ public class enemy extends Actor
         }
     }
     /**
-    * to set  up gravity so the player falls on the Ground and stays there
+    * to set  up gravity so the player falls on the ground and stays there
     */
     public void gravity() {
         setLocation(getX(), getY() + vSpeed);

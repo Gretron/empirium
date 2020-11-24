@@ -100,6 +100,9 @@ public class Bobius extends Actor {
     private int jumpStrength = -40;
     private int jumpDelay = 0;
     
+    //Hitbox & Healthbar
+
+    
     // CONSTRUCTOR
     
     /**
@@ -473,10 +476,12 @@ public class Bobius extends Actor {
         if (isAttackingR() || isAttackingR && hitbox != null && getImage() == attack6R) {
             ((MyWorld)getWorld()).points += 1;
             hitbox.healthValue -= 1;
+            hitbox.lowerHealth();
         }
         if (isAttackingL() || isAttackingL && hitbox != null && getImage() == attack6L) {
             ((MyWorld)getWorld()).points += 1;
             hitbox.healthValue -= 1;
+            hitbox.lowerHealth(); 
         }
         return false;
     }
@@ -509,7 +514,7 @@ public class Bobius extends Actor {
    // GRAVITY METHODS
 
    /**
-   * to set  up gravity so the player falls on the Ground and stays there
+   * to set  up gravity so the player falls on the ground and stays there
    */
    private void gravity() {
        setLocation(getX(), getY() + vSpeed);

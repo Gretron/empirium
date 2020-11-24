@@ -8,9 +8,9 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Prisoner extends enemy
 {
-    public Hitbox hitbox; 
+    public Hitbox hitbox;
     public Prisoner() {
-       this.hitbox = new Hitbox();
+       this.hitbox = new Hitbox(20, 20);
     }
     public void act() {
        gravity();
@@ -19,7 +19,9 @@ public class Prisoner extends enemy
        checkGround();
        if (hitbox.healthValue <= 0) {
            getWorld().removeObject(this);
-           //Remove hitbox after Prisoner dies *****************************************
        }
-    }        
+       if (getWorld() != null) {
+           hitbox.setLocation(this.getX(), this.getY());
+       }           
+    }
 }
