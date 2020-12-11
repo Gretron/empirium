@@ -1,4 +1,5 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import java.util.List;
 
 /**
  * Write a description of class enemy here.
@@ -6,43 +7,30 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class enemy extends Actor
+public class Enemy extends Actor
 {
-    private GreenfootImage stand2 = new GreenfootImage("Stand.png");
-    private GreenfootImage stand1 = new GreenfootImage("StandL.png");
+    public int attackTimer = 0;
+    private int attackImg = 0;
     
-    private GreenfootImage walk1 = new GreenfootImage("WalkingAnimation1.png");
-    private GreenfootImage walk2 = new GreenfootImage("WalkingAnimation2.png");
-    private GreenfootImage walk3 = new GreenfootImage("WalkingAnimation3.png");
-    private GreenfootImage walk4 = new GreenfootImage("WalkingAnimation4.png");
-    private GreenfootImage walk5 = new GreenfootImage("WalkingAnimation5.png");
-    private GreenfootImage walk6 = new GreenfootImage("WalkingAnimation6.png");
+    // attack left frames
     
-    private GreenfootImage walk1L = new GreenfootImage("WalkingAnimationL1.png");
-    private GreenfootImage walk2L = new GreenfootImage("WalkingAnimationL2.png");
-    private GreenfootImage walk3L = new GreenfootImage("WalkingAnimationL3.png");
-    private GreenfootImage walk4L = new GreenfootImage("WalkingAnimationL4.png");
-    private GreenfootImage walk5L = new GreenfootImage("WalkingAnimationL5.png");
-    private GreenfootImage walk6L = new GreenfootImage("WalkingAnimationL6.png");
+    private int movingDistance;
+    private int walkImg = 0;
+    public int enemyRadiusModifier = 0;
+    public static int prisonerNum = 0;
     
-    private int counter;    
-        
+    public int counter;    
+    public int frames;    
     private boolean isStanding;
-    private boolean walkedRight;
-    private boolean walkedLeft;
     
     // Gravity
     private static final int GRAVITY = 4;
     private int vSpeed;
     
-    private final int distance = 170;
+    private final static int DISTANCE = 200;
+    private final static int DISTANCE_ADDITIONAL = 60;
+    private final static int CHANGE_SIDE = 100;
     
-    public void act () {
-        gravity();
-        counter();
-        state();
-        checkGround();
-    }
     /**
     * To check if there is collision with the ground (this is the collision factor with the ground)
     */
@@ -58,31 +46,28 @@ public class enemy extends Actor
     * to set  up gravity so the player falls on the ground and stays there
     */
     public void gravity() {
-        setLocation(getX(), getY() + vSpeed);
-           
+        setLocation(getX(), getY() + vSpeed); 
     }
-    public boolean direction() {
+    public boolean isFacingRight() {
         int enemyX = getX();
         Actor bobius = (Actor)getWorld().getObjects(Bobius.class).get(0);
         int bobiusX = bobius.getX();
-        if (enemyX - bobiusX < 0) {
-            return true;
-        }
-        else {
-            return false;
-        }
+        if (enemyRadiusModifier % 2 == 0)
+            return enemyX - bobiusX - CHANGE_SIDE < 0;
+        else
+            return enemyX - bobiusX + CHANGE_SIDE < 0;
     }
-    public boolean closeProximity() {
+    
+    public boolean isFacingLeft() {
         int enemyX = getX();
         Actor bobius = (Actor)getWorld().getObjects(Bobius.class).get(0);
         int bobiusX = bobius.getX();
-        if (enemyX > bobiusX - distance && enemyX < bobiusX + distance) {
-            return true;
-        }
-        else {
-            return false;
-        }
+        if (enemyRadiusModifier % 2 == 0)
+            return enemyX - bobiusX - CHANGE_SIDE > 0;
+        else
+            return enemyX - bobiusX + CHANGE_SIDE > 0;
     }
+  
     /**
      * 
      */
@@ -94,101 +79,108 @@ public class enemy extends Actor
             counter = 0;
         }
     }
-    
-    public boolean isWalkingLeft(){
-        if(!direction()){
-          walkedLeft = true;
-          walkedRight = false;
-          return true;
+   
+    public boolean walk(int walkSpeed, String walkArray[], String stand) {
+        if (isFacingRight() && !isClose(this)) {
+            if (counter % 4 == 0) {
+                walkImg++;
+                setLocation(getX() + walkSpeed, getY());
+            }
+            if (walkImg >= walkArray.length) {
+                walkImg = 0;
+            }
+            GreenfootImage newImage = new GreenfootImage(walkArray[walkImg]);   
+            setImage(newImage);
+            return true;
+        }
+        else if (isFacingLeft() && !isClose(this)) {
+            if (counter % 4 == 0) {
+                walkImg++;
+                setLocation(getX() - walkSpeed, getY());
+            }
+            if (walkImg >= walkArray.length) {
+                walkImg = 0;
+            }
+            GreenfootImage newImage = new GreenfootImage(walkArray[walkImg]);
+            newImage.mirrorHorizontally();
+            setImage(newImage);
+            return true;
+        }
+        else {
+            GreenfootImage standing = new GreenfootImage(stand);
+            if (isFacingRight())
+                setImage(standing);
+            else {
+                standing.mirrorHorizontally();
+                setImage(standing);
+            }
         }
         return false;
     }
-    public boolean isWalkingRight(){
-        if (direction()){
-            walkedRight = true;
-            walkedLeft = false;
+    
+    public static boolean isClose(Enemy enemy) {
+        int enemyX = enemy.getX();
+        if (enemy.getWorld().getObjects(Bobius.class).size() == 0) 
+            return false;
+        int bobiusX = enemy.getWorld().getObjects(Bobius.class).get(0).getX();
+        int left;
+        int right;
+        int modifier = (DISTANCE + DISTANCE_ADDITIONAL * (enemy.enemyRadiusModifier / 2));
+        if (enemy.enemyRadiusModifier % 2 == 0) {
+            left = bobiusX + CHANGE_SIDE;
+            right = bobiusX + modifier;
+        } else {
+            left = bobiusX - modifier;
+            right = bobiusX - CHANGE_SIDE;
+        }
+        return enemyX > left && enemyX < right;
+    }
+    
+    public static void preventOverlap(World MyWorld) {
+        List prisoners = MyWorld.getObjects(Prisoner.class);
+        int closeEnemies = 0;
+        for (int i = 0; i < prisoners.size(); i++) {
+            Prisoner prisoner = (Prisoner) prisoners.get(i);
+            if (prisoner.enemyRadiusModifier == 0 || prisonerNum != prisoners.size()) {
+                prisoner.enemyRadiusModifier = closeEnemies;
+            }
+            if (isClose(prisoner))
+                closeEnemies++;
+        }
+        prisonerNum = prisoners.size();
+    }
+    
+    public boolean enemyAttack(int walkSpeed, int attackSpeed, String walkArray[], String attackArray[], String stand) {
+        if (inAttackRange() && !walk(walkSpeed, walkArray, stand) && attackTimer > attackSpeed || attackImg != 0) {   
+            GreenfootImage newImage = new GreenfootImage(attackArray[attackImg]);
+            if (counter % 2 == 0) {
+                attackImg++;
+                attackTimer = 0;
+            }
+            if (attackImg >= attackArray.length) {
+                attackImg = 0;
+            }
+            if (isFacingLeft()) 
+                newImage.mirrorHorizontally(); 
+            setImage(newImage);
             return true;
         }
         return false;
     }
-    public void state(){
-        if (isWalkingRight() && !closeProximity()){
-            if (counter % 5 == 0){
-                setLocation(getX() + 10,getY());
-                enemyWalkAnimationR();
-            }
-        }
-        
-        else if (isWalkingLeft() && !closeProximity()){
-            if (counter % 5 == 0){
-                setLocation(getX() - 10,getY());
-                enemyWalkAnimationL();
-            }
-        }
-        else if(!direction()) {
-            isStandingRight();
-        }
-        else if(direction()) {
-            isStandingLeft();
-        }
-    }
-    public boolean isStandingRight(){
-         setImage(stand1);
-         return true;
-    }
-        
-    public boolean isStandingLeft(){
-        setImage(stand2);
-        return true;
+    
+    public boolean inAttackRange() {
+        int enemyX = getX();
+        int bobiusX = getWorld().getObjects(Bobius.class).get(0).getX();
+        return enemyX > bobiusX - DISTANCE  && enemyX < bobiusX + DISTANCE;
     }
     
-    public void enemyWalkAnimationR(){
-        if (getImage() == stand1 || getImage() == stand2){
-            setImage(walk1);
+    public int cooldownTimer(int timer) {
+        if (frames % 60 == 0) {
+            timer++;
+            frames = 0;    
         }
-        else if (getImage() == walk1){
-            setImage(walk2);
-        }
-        else if (getImage() == walk2){
-            setImage(walk3);
-        }
-        else if (getImage() == walk3){
-            setImage(walk4);
-        }
-        else if (getImage() == walk4){
-            setImage(walk5);
-        }
-        else if (getImage() == walk5) {
-            setImage(walk6);
-        }
-        else {
-            setImage(walk1);
-        }
+        return timer;
     }
-    public void enemyWalkAnimationL(){
-       if (getImage() == stand1 || getImage() == stand2){
-            setImage(walk1L);
-        }
-        else if (getImage() == walk1L){
-            setImage(walk2L);
-        }
-        else if (getImage() == walk2L){
-            setImage(walk3L);
-        }
-        else if (getImage() == walk3L){
-            setImage(walk4L);
-        }
-        else if (getImage() == walk4L){
-            setImage(walk5L);
-        }
-        else if (getImage() == walk5L) {
-            setImage(walk6L);
-        }
-        else {
-            setImage(walk1L);
-        }
-    }
-    
 }
 
     

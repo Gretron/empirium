@@ -1,23 +1,16 @@
-import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import greenfoot.*; 
 
 /**
- * Write a description of class CreditWorld here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
+ * The CreditWorld displays the credits for the game, including the main team who developed the game and how each person contributed to it's creation
+ * @author Team Empirium
+ * @version (09/12/2020)
  */
-public class CreditWorld extends World
-{
-
+public class CreditWorld extends World {
     /**
-     * Constructor for objects of class CreditWorld.
-     * 
+     * Constructor that adds all the necessary objects to the world
      */
-    public CreditWorld()
-    {    
-        
-        super(1280, 720, 1); 
-        addObject(new Creds(), 640, 360);
-        addObject(new BackButton(), 200, 600);
+    public CreditWorld() {    
+        super(1280, 720, 1);
+        addObject(new BackButton(), 1141, 541);
     }
 }

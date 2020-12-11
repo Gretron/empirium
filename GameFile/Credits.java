@@ -1,24 +1,35 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import java.util.List;
 
-/**
- * Write a description of class Credits here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
- */
 public class Credits extends Menu
 {
-    /**
-     * Act - do whatever the Credits wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
-     */
-    public void act() 
-    {
-        creditButton();
-    }    
-     private void creditButton() {
+    private GreenfootImage animation = new GreenfootImage("CreditsFP.png");
+    private GreenfootImage credits = new GreenfootImage("CreditsF.png");
+    
+   public void act() {
+        if (getWorld() instanceof StartMenu) {
+            creditButton();
+            animation();
+        }
+        else
+            getWorld().removeObject(this);
+   }
+   private void creditButton() {
         if  (Greenfoot.mouseClicked(this)) {
             Greenfoot.setWorld(new CreditWorld());
+        }
+   }
+
+   public void animation(){
+        MouseInfo mouse = Greenfoot.getMouseInfo();
+        if (mouse != null) {
+            setImage(credits);
+            List objects = getWorld().getObjectsAt(mouse.getX(), mouse.getY(), Credits.class);
+            for(Object object : objects) {
+                if (object == this) {
+                    setImage(animation);
+                }
+            }
         }
    }
 }

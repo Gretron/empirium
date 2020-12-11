@@ -1,22 +1,17 @@
-import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import greenfoot.*;
 
 /**
- * Write a description of class InstructionWorld here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
+ * InstructionWorld displays all the keybinds so the player can learn the controls of the game
+ * @author Team Empirium
+ * @version (09/12/2020)
  */
-public class InstructionWorld extends World
-{
-
+public class InstructionWorld extends World {
     /**
-     * Constructor for objects of class InstructionWorld.
-     * 
+     * Constructor for the InstructionWorld() adds all the objects into the world
      */
-    public InstructionWorld()
-    {    
-        super(1280, 720, 1); 
-        addObject(new Info(), 640, 360);
-        addObject(new BackButton(), 200, 600);
+    public InstructionWorld() {    
+        super(1280, 720, 1);
+        addObject(new Keybinds(), 640, 360);
+        addObject(new BackButton(), 1115, 598);
     }
 }

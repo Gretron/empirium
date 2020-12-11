@@ -1,24 +1,32 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import java.util.List;
 
-/**
- * Write a description of class Start here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
- */
 public class Start extends Menu
 {
-    /**
-     * Act - do whatever the Start wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
-     */
+    private GreenfootImage animation = new GreenfootImage("StartFP.png");
+    private GreenfootImage startButton = new GreenfootImage("StartF.png");
     public void act() 
     {
         startButton();
-    }    
+        animation();
+    }
     private void startButton() {
         if  (Greenfoot.mouseClicked(this)) {
-            Greenfoot.setWorld(new MyWorld());
-       }
+            Greenfoot.setWorld(new MainWorld());
+        }
+    }
+
+    public void animation(){
+        MouseInfo mouse = Greenfoot.getMouseInfo();
+        if (mouse != null) {
+            setImage(startButton);
+            List objects = getWorld().getObjectsAt(mouse.getX(), mouse.getY(), Start.class);
+            for(Object object : objects) {
+                if (object == this) {
+                    setImage(animation);
+                }
+            }
+        }
+
     }
 }

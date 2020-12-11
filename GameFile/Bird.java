@@ -1,62 +1,48 @@
-import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import greenfoot.*; 
+
 /**
- * Write a description of class Bird here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
+ * The bird travels along the x-axis, going to randomly generated points, and flying out of the world after a certain amount of time
+ * @author Team Empirium
+ * @version (09/12/2020)
  */
-public class Bird extends Actor
-{
-    private GreenfootImage bird1L = new GreenfootImage("BirdWingUp.png");
-    private GreenfootImage bird2L = new GreenfootImage("BirdWingDown.png");
-    private GreenfootImage bird1R = new GreenfootImage("BirdDownR.png");
-    private GreenfootImage bird2R = new GreenfootImage("BirdUpR.png");
+public class Bird extends Actor {
+    // Bird animation array
+    private String animateBird[] = {"BirdWingUp.png", "BirdWingDown.png"};
+    // Variable for bird's next X coordinate
     private static int birdXLocation = -1;
+    // Kill variable is what dictates when the bird flies out of the world
     private int kill = 0;
+    // Frame variable is used for the animation
     private int frame = 0;
-    public Bird() {
-        bird1L.scale(bird1L.getWidth() * 3, bird1L.getHeight() * 3);
-        setImage(bird1L);
-        bird2L.scale(bird2L.getWidth() * 3, bird2L.getHeight() * 3);
-        setImage(bird2L);
-        bird1R.scale(bird1R.getWidth() * 3, bird1R.getHeight() * 3);
-        setImage(bird1R);
-        bird2R.scale(bird2R.getWidth() * 3, bird2R.getHeight() * 3);
-        setImage(bird2R);
-    }
-    /**
-     * Act - do whatever the Bird wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
+    
+   /**
+     * act method runs constantly
      */
     public void act() 
     {
        removeAtEdge();
        movement();
        twitchLOL();
-    }   
-     /**
-     * bird animation
-     */
-    public void animateBirdR() {
-        frame++;
-        if (frame == 7) {
-            setImage(bird2R);
-        }
-        else if (frame == 14) {
-            setImage(bird1R);
-            frame = 0;
+       animateBird();
+    }
+    
+   /**
+    * Method for the bird animation
+    */
+    public void animateBird() {
+        if (getWorld() != null) {
+            frame++;
+            if (frame % 9 == 0) {
+                GreenfootImage img = new GreenfootImage(animateBird[frame%2]);
+                if (birdXLocation > getX()) img.mirrorHorizontally();
+                setImage(img);
+            }
         }
     }
-    public void animateBirdL() {
-        frame++;
-        if (frame == 7) {
-            setImage(bird2L);
-        }
-        else if (frame == 14) {
-            setImage(bird1L);
-            frame = 0;
-        }
-    }
+   
+   /**
+    * Method for the bird's movement
+    */
     public void movement() {
         int moveSteps = 3;
         kill++;
@@ -73,28 +59,27 @@ public class Bird extends Actor
         else {
             move(moveSteps * -1);
         }
-        getWorld().showText("" + kill, 1220, 700);
     }
     
+   /**
+    * Method to remove the bird when it reaches the edge of the world
+    */ 
     public void removeAtEdge() {
         if (isAtEdge()) {
            getWorld().removeObject(this);
         }
     }
     
-    @Override
-    public void move(int num) {
-        super.move(num);
-        if (num < 0) animateBirdL();
-        else animateBirdR();
-    }
-    
-    public void twitchLOL() {
+   /**
+    * Easter Egg method, includes our socials as a neat little feature (SHHHHH)
+    */  
+    public void twitchLOL() { 
         if  (Greenfoot.mouseClicked(this)) {
             String tonyTwitch = "https://www.twitch.tv/buhbah6";
             String theoTwitch = "https://www.twitch.tv/sslur";
             String georgeYT = "https://www.youtube.com/channel/UCvp8UGGAi_Up0r-4rhZTujg";
-            System.out.printf("%s\n%s\n%s\n", tonyTwitch, theoTwitch, georgeYT);
+            String gret = "Shoutout to Gretron (David)";
+            System.out.printf("%s\n%s\n%s\n%s\n", tonyTwitch, theoTwitch, georgeYT, gret);
         }   
     }
 }
