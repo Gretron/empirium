@@ -1,5 +1,6 @@
 #BlueJ class context
 comment0.target=Bobius
+comment0.text=\r\n\ Main\ character/\ Player\ Class\r\n\ @author\ Team\ Empirium\r\n\ @version\ (09/12/2020)\r\n
 comment1.params=
 comment1.target=Bobius()
 comment1.text=\r\n\ Bobius\ Constructor\ sets\ his\ starting\ image,\ and\ instantiates\ his\ hitbox\r\n

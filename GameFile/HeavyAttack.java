@@ -1,21 +1,31 @@
-import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import greenfoot.*; 
 
 /**
- * Write a description of class HeavyAttack here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
+ * Acts as a cooldown timer in the MainWorld, and an upgrade button on the BuyScreen
+ * @author Team Empirium
+ * @version (09/12/2020)
  */
-public class HeavyAttack extends Actor
+public class HeavyAttack extends Actor 
 {
+    // Array for animation
     private String[] heavyAttackA = {"HeavyWidget1.png", "HeavyWidget2.png", "HeavyWidget3.png", "HeavyWidget4.png", "HeavyWidget5.png", "HeavyWidget6.png", "HeavyWidget7.png"};
+ 
+    // Level and cost for upgrades
     public static int level = 1;
     private int heavyAttackImg = 0;
     private static int cost = 60;
+    
+    /**
+     * Constructor that sets the image 
+     */
     public HeavyAttack() {
         GreenfootImage initialImg = new GreenfootImage(heavyAttackA[0]);     
         setImage(initialImg);
     }
+    
+    /**
+     * Act Method runs constantly
+     */
     public void act() {
         if (getWorld() instanceof BuyScreen) {
             getWorld().showText("Level: " + level, getX(), getY() - 150);
@@ -34,6 +44,9 @@ public class HeavyAttack extends Actor
         }
     }
     
+    /**
+     * Animation for the cooldown in the MainWorld
+     */
     private void cooldownAnimation() {
         if (Bobius.heavyAttackTimer < 3 || heavyAttackImg != 0) {
             if (Bobius.counter % 26 == 0)
@@ -47,6 +60,9 @@ public class HeavyAttack extends Actor
         }
     }
     
+    /**
+     * Changes the size of the image depending on what world it is in
+     */
     @Override
     protected void addedToWorld(World world) {
         if (world instanceof MainWorld)

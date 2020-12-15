@@ -1,21 +1,28 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class Dodge here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
+ * The Dodge object acts as a cooldown timer in the MainWorld, to allow the player to visually see when they will be able to roll next
+ * @author Team Empirium
+ * @version (09/12/2020)
  */
 public class Dodge extends Actor
-{
+{   
+    // Dodge animation array
     private String[] dodgeA = {"DodgeWidget1.png", "DodgeWidget2.png", "DodgeWidget3.png", "DodgeWidget4.png", "DodgeWidget5.png", "DodgeWidget6.png", "DodgeWidget7.png"};
     private int rollImg = 0;
     private int counter = 0;
     
+    /**
+     * Constructor that sets the image of the object when it is instatiated
+     */
     public Dodge() {
         GreenfootImage initialImg = new GreenfootImage(dodgeA[0]);
         setImage(initialImg);
     }
+    
+    /**
+     * Act method runs constantly
+     */
     public void act() 
     {   
         if (getWorld() instanceof MainWorld) {
@@ -31,6 +38,10 @@ public class Dodge extends Actor
         }
     } 
     
+    /**
+     * Animation for the cooldown timer
+     * 
+     */
     private void cooldownAnimation() {
         if (Bobius.rollTimer < 4 ||rollImg != 0) {
             if (counter % 20  == 0)
@@ -44,6 +55,9 @@ public class Dodge extends Actor
         }
     }
     
+    /**
+     * Override method that changes the size of the object depending on what world it is in
+     */
     @Override
     protected void addedToWorld(World world) {
         if (world instanceof MainWorld)

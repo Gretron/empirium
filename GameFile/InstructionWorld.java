@@ -11,7 +11,6 @@ public class InstructionWorld extends World {
      */
     public InstructionWorld() {    
         super(1280, 720, 1);
-        addObject(new Keybinds(), 640, 360);
         addObject(new BackButton(), 1115, 598);
     }
 }

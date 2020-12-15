@@ -1,23 +1,33 @@
-import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import greenfoot.*;  
 
 /**
- * Write a description of class SpartanKick here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
+ * Spartan kick functions both as a cooldown timer and an upgrade button
+ * @author Team Empirium
+ * @version (09/12/2020)
  */
 public class SpartanKick extends Actor
 {
     private String[] spartanKickA = {"SpartanKick1.png", "SpartanKick2.png", "SpartanKick3.png", "SpartanKick4.png", "SpartanKick5.png", "SpartanKick6.png", "SpartanKick7.png"};
     
+    //Counters for the cooldown
     private int kickImg = 0;
-    public static int level = 1;
     private int counter = 0;
+    
+    // Level and cost for upgrades
+    public static int level = 1;
     private static int cost = 140;
+    
+    /**
+     * Default Constructor
+     */
     public SpartanKick() {
         GreenfootImage initialImg = new GreenfootImage(spartanKickA[0]);
         setImage(initialImg);
     }
+    
+    /**
+     * Act method runs constantly
+     */
     public void act() {
         if (getWorld() instanceof BuyScreen) {
             getWorld().showText("Level: " + level, getX(), getY() - 150);
@@ -39,6 +49,9 @@ public class SpartanKick extends Actor
             counter = 0;
     } 
     
+    /**
+     * Animation for the cooldown that displays when it can be used again
+     */
     private void cooldownAnimation() {
         if (Bobius.kickTimer < 15 || kickImg != 0) {
             if (counter % 130 == 0)
@@ -52,6 +65,9 @@ public class SpartanKick extends Actor
         }
     }
     
+    /**
+     * Changes the size of the image depending on the world it is in
+     */
     @Override
     protected void addedToWorld(World world) {
         if (world instanceof MainWorld)

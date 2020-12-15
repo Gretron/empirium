@@ -1,16 +1,14 @@
-import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import greenfoot.*;  
 
 /**
- * Write a description of class QRImage here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
+ * QRImage shows up when the player loses, and allows the player to reset the game 
+ * @author Team Empirium
+ * @version (09/12/2020)
  */
 public class QRImage extends Actor
 {
     /**
-     * Act - do whatever the QRImage wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
+     * Act method runs constantly
      */
     public void act() 
     {

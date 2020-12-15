@@ -1,6 +1,10 @@
 import greenfoot.*;  
 import java.util.List;
-
+/**
+ * Main character/ Player Class
+ * @author Team Empirium
+ * @version (09/12/2020)
+ */
 public class Bobius extends Actor {
     // retrieves the image set to Bobius
     private GreenfootImage image = getImage();

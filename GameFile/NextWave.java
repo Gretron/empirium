@@ -1,27 +1,30 @@
-import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import greenfoot.*;  
 
 /**
- * Write a description of class NextWave here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
+ * NextWave applys the wave multiplier,and sets the world back to the mainWorld
+ * @author Team Empirium
+ * @version (09/12/2020)
  */
 public class NextWave extends Actor
 {
+    
     /**
-     * Act - do whatever the NextWave wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
+     * Act method runs constantly
      */
     public void act() 
     {
         nextWaveButton();
     }
     
+    /**
+     * Applies the wave multipliers
+     */
     public void nextWaveButton() {
         if (Greenfoot.mouseClicked(this)) {
             Greenfoot.setWorld(new MainWorld());
             MainWorld.waveNum++;
             Prisoner.damage += 1;
+            Bobius.health += 25;
             if (MainWorld.waveNum > 3) {
                 Greenfoot.setWorld(new PostCycleMessage());
             }

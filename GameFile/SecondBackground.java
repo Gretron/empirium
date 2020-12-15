@@ -1,19 +1,8 @@
-import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import greenfoot.*;  
 
 /**
- * Write a description of class SecondBackground here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
+ * Acts as a cover to hide the hitboxes and the ground
+ * @author Team Empirium
+ * @version (09/12/2020)
  */
-public class SecondBackground extends Actor
-{
-    /**
-     * Act - do whatever the SecondBackground wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
-     */
-    public void act() 
-    {
-        // Add your action code here.
-    }    
-}
+public class SecondBackground extends Actor{}

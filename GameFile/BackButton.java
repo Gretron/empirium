@@ -1,21 +1,23 @@
-import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import greenfoot.*;  
 
 /**
- * Write a description of class BackButton here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
+ * Backbutton allows the player to return to a previous menu
+ * @author Team Empirium
+ * @version (09/12/2020)
  */
-public class BackButton extends Menu
+public class BackButton extends Actor
 {
     /**
-     * Act - do whatever the BackButton wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
+     * Act method runs constantly
      */
     public void act() 
     {
         backButton();
-    }    
+    }
+    
+    /**
+     * does the action of returning to a prior menu
+     */
     private void backButton() {
         if  (Greenfoot.mouseClicked(this)) {
             Greenfoot.setWorld(new StartMenu());
